@@ -20,7 +20,7 @@ exports.verifyToken = async (req, res, next) => {
         message: "You are not logged in! Please log in to get access.",
       });
 
-    const decoded = jwt.verify(token, "This is my secret key!");
+    const decoded = jwt.verify(token, process.env.SECRET_KEY);
 
     const currentUser = await User.findById(decoded.id);
     if (!currentUser)

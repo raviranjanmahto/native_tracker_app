@@ -22,9 +22,9 @@ exports.login = async (req, res) => {
         .json({ status: "fail", message: "All fields are required!" });
 
     const user = await User.findOne({ email }).select("+password");
-    if (!user || password !== user.password)
+    if (!user || !(await user.correctPassword(password, user.password)))
       return res
-        .status(400)
+        .status(401)
         .json({ status: "fail", message: "Invalid email or password!" });
 
     user.password = undefined;
@@ -33,5 +33,3 @@ exports.login = async (req, res) => {
     res.status(400).json({ status: "fail", message: error.message });
   }
 };
-
-
