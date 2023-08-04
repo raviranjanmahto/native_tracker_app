@@ -3,6 +3,7 @@ dotenv.config();
 const express = require("express");
 const mongoose = require("mongoose");
 const userRouter = require("./routes/userRoutes");
+const trackRouter = require("./routes/trackRoutes");
 
 const app = express();
 app.use(express.json({}));
@@ -19,6 +20,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/v1/auth", userRouter);
+app.use("/api/v1/track", trackRouter);
 
 const PORT = process.env.PORT || 7007;
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
